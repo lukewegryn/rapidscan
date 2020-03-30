@@ -665,6 +665,16 @@ tools_precheck = [
 					["wapiti"], ["whatweb"], ["nmap"], ["golismero"], ["host"], ["wget"], ["uniscan"], ["wafw00f"], ["dirb"], ["davtest"], ["theHarvester"], ["xsser"], ["dnsrecon"],["fierce"], ["dnswalk"], ["whois"], ["sslyze"], ["lbd"], ["golismero"], ["dnsenum"],["dmitry"], ["davtest"], ["nikto"], ["dnsmap"]
 			     ]
 
+# Exclude Tests
+exclude_indices = [14]
+
+print "Excluding the following tests:"
+for index in exclude_indices:
+    print "[-] " + tool_names.pop(exclude_indices)
+    tool_cmd.pop(exclude_indices)
+    tool_resp.pop(exclude_indices)
+    tool_status.pop(exclude_indices)
+
 # Shuffling Scan Order (starts)
 scan_shuffle = list(zip(tool_names, tool_cmd, tool_resp, tool_status))
 random.shuffle(scan_shuffle)
@@ -721,7 +731,7 @@ else:
         cmd = 'sha1sum rapidscan.py | grep .... | cut -c 1-40'
         oldversion_hash = subprocess.check_output(cmd, shell=True)
         oldversion_hash = oldversion_hash.strip()
-        os.system('wget -N https://raw.githubusercontent.com/skavngr/rapidscan/master/rapidscan.py -O rapidscan.py > /dev/null 2>&1')
+        os.system('wget -N https://raw.githubusercontent.com/lukewegryn/rapidscan/master/rapidscan.py -O rapidscan.py > /dev/null 2>&1')
         newversion_hash = subprocess.check_output(cmd, shell=True)
         newversion_hash = newversion_hash.strip()
         if oldversion_hash == newversion_hash :
