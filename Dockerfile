@@ -55,12 +55,11 @@ RUN apt-get install -y \
   whois \
   theharvester
 
-RUN ls && ls && ls
 RUN wget -O rapidscan.py https://raw.githubusercontent.com/lukewegryn/rapidscan/master/rapidscan.py && chmod +x rapidscan.py
 RUN ln -s /rapidscan/rapidscan.py /usr/local/bin/rapidscan
 WORKDIR /reports
 
-ENTRYPOINT rapidscan ${TARGET_URL} > /reports/vuln-scan-output.txt && \
+ENTRYPOINT rapidscan ${TARGET_URL} 2>&1 | tee /reports/vuln-scan-output.txt && \
   tar -cvf /tmp/${TARGET_URL}-vulnerability-scan.tar.gz /reports && \
   ffsend /tmp/${TARGET_URL}-vulnerability-scan.tar.gz > /rapidscan/result.txt && \
   sendlink=$(cat /rapidscan/result.txt | grep "send.firefox.com/download" | cut -d" " -f5) && \
