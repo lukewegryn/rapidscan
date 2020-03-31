@@ -670,10 +670,10 @@ exclude_indices = [14]
 
 print "Excluding the following tests:"
 for index in exclude_indices:
-    print "[-] " + tool_names.pop(exclude_indices)
-    tool_cmd.pop(exclude_indices)
-    tool_resp.pop(exclude_indices)
-    tool_status.pop(exclude_indices)
+    print "[-] " + str(tool_names.pop(index))
+    tool_cmd.pop(index)
+    tool_resp.pop(index)
+    tool_status.pop(index)
 
 # Shuffling Scan Order (starts)
 scan_shuffle = list(zip(tool_names, tool_cmd, tool_resp, tool_status))
