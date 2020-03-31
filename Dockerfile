@@ -60,7 +60,7 @@ RUN ln -s /rapidscan/rapidscan.py /usr/local/bin/rapidscan
 WORKDIR /reports
 
 ENTRYPOINT rapidscan ${TARGET_URL} && \
-  mv /rapidscan/RS-Vulnerability-Report /rapidscan/${TARGET_URL}-Vulnerability-Scan-Report.pdf && \
+  mv /rapidscan/reports/RS-Vulnerability-Report /rapidscan/${TARGET_URL}-Vulnerability-Scan-Report.pdf && \
   ffsend /rapidscan/${TARGET_URL}-Vulnerability-Scan-Report.pdf > /rapidscan/result.txt && \
   sendlink=$(cat /rapidscan/result.txt | grep "send.firefox.com/download" | cut -d" " -f5) && \
   aws ses send-email \
