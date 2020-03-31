@@ -13,6 +13,8 @@ RUN apt-get install -y \
   nmap \
   sslscan
 
+RUN pip install wheel
+
 RUN cd /opt
 RUN git clone https://github.com/golismero/golismero.git
 RUN cd golismero
