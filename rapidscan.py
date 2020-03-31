@@ -666,12 +666,14 @@ tools_precheck = [
 			     ]
 
 # Exclude Tests
-exclude_indices = range(13,79)
+#exclude_indices = range(13,79)
+tool_names = tool_names[:len(tool_names)-67]
+tool_cmd = tool_cmd[:len(tool_cmd)-67]
 
-print "Excluding the following tests:"
-for index in exclude_indices:
-    print "[-] " + str(tool_names.pop(index))
-    tool_cmd.pop(index)
+#print "Excluding the following tests:"
+#for index in exclude_indices:
+#    print "[-] " + str(tool_names.pop(index))
+#    tool_cmd.pop(index)
     #tool_resp.pop(index)
     #tool_status.pop(index)
 
