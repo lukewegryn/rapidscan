@@ -666,7 +666,7 @@ tools_precheck = [
 			     ]
 
 # Exclude Tests
-exclude_indices = range(13,79)
+exclude_indices = [14]
 
 print "Excluding the following tests:"
 for index in exclude_indices:
