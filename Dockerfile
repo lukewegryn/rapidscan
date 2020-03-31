@@ -15,9 +15,9 @@ RUN apt-get install -y \
 
 RUN pip install wheel
 
-RUN cd /opt
+WORKDIR /opt
 RUN git clone https://github.com/golismero/golismero.git
-RUN cd golismero
+WORKDIR /opt/golismero
 RUN pip install -r requirements.txt
 RUN pip install -r requirements_unix.txt
 RUN ln -s /opt/golismero/golismero.py /usr/bin/golismero
