@@ -666,14 +666,14 @@ tools_precheck = [
 			     ]
 
 # Exclude Tests
-exclude_indices = range(13,30)
+exclude_indices = range(13,79)
 
 print "Excluding the following tests:"
 for index in exclude_indices:
     print "[-] " + str(tool_names.pop(index))
     tool_cmd.pop(index)
-    tool_resp.pop(index)
-    tool_status.pop(index)
+    #tool_resp.pop(index)
+    #tool_status.pop(index)
 
 # Shuffling Scan Order (starts)
 scan_shuffle = list(zip(tool_names, tool_cmd, tool_resp, tool_status))
