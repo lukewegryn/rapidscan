@@ -58,9 +58,10 @@ RUN apt-get install -y \
 RUN ls && ls && ls
 RUN wget -O rapidscan.py https://raw.githubusercontent.com/lukewegryn/rapidscan/master/rapidscan.py && chmod +x rapidscan.py
 RUN ln -s /rapidscan/rapidscan.py /usr/local/bin/rapidscan
+WORKDIR /reports
 
-ENTRYPOINT rapidscan ${TARGET_URL} && \
-  tar -cvf /tmp/${TARGET_URL}-vulnerability-scan.tar.gz /rapidscan/ && \
+ENTRYPOINT rapidscan ${TARGET_URL} > /reports/vuln-scan-output.txt && \
+  tar -cvf /tmp/${TARGET_URL}-vulnerability-scan.tar.gz /reports && \
   ffsend /tmp/${TARGET_URL}-vulnerability-scan.tar.gz > /rapidscan/result.txt && \
   sendlink=$(cat /rapidscan/result.txt | grep "send.firefox.com/download" | cut -d" " -f5) && \
   export message="Your vulnerability scan report is ready for download: $sendlink" && \
