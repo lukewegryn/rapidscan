@@ -52,4 +52,5 @@ RUN apt-get install -y \
 RUN wget -O rapidscan.py https://raw.githubusercontent.com/lukewegryn/rapidscan/master/rapidscan.py && chmod +x rapidscan.py
 RUN ln -s /rapidscan/rapidscan.py /usr/local/bin/rapidscan
 WORKDIR /reports
-ENTRYPOINT ["rapidscan"]
+
+ENTRYPOINT rapidscan ${TARGET_URL} && aws s3 cp /rapidscan/RS-Vulnerability-Report s3://${S3_URI}/${TARGET_URL}-scan.pdf
