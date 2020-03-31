@@ -55,15 +55,19 @@ RUN apt-get install -y \
   whois \
   theharvester
 
+RUN ls && ls && ls
 RUN wget -O rapidscan.py https://raw.githubusercontent.com/lukewegryn/rapidscan/master/rapidscan.py && chmod +x rapidscan.py
 RUN ln -s /rapidscan/rapidscan.py /usr/local/bin/rapidscan
-WORKDIR /reports
 
 ENTRYPOINT rapidscan ${TARGET_URL} && \
-  mv /rapidscan/reports/RS-Vulnerability-Report /rapidscan/${TARGET_URL}-Vulnerability-Scan-Report.pdf && \
-  ffsend /rapidscan/${TARGET_URL}-Vulnerability-Scan-Report.pdf > /rapidscan/result.txt && \
+  mv /rapidscan/RS-Debug-ScanLog /rapidscan/${TARGET_URL}-RS-Debug-ScanLog.txt && \
+  ffsend /rapidscan/${TARGET_URL}-RS-Debug-ScanLog.txt > /rapidscan/result.txt && \
   sendlink=$(cat /rapidscan/result.txt | grep "send.firefox.com/download" | cut -d" " -f5) && \
+  export message="Your vulnerability scan report is ready for download: $sendlink" && \
+  echo ${message} && \
   aws ses send-email \
   --from "${FROM_ADDRESS}" \
-  --destination "ToAddresses=${TO_ADDRESS}" \
-  --message "Subject={Data=${SUBJECT},Charset=utf8},Body={Text={Data=Your Vulnerability Scan Report is ready for download: $sendlink,Charset=utf8},Html={Data=,Charset=utf8}}"
+  --to "${TO_ADDRESS}" \
+  --subject "${SUBJECT}" \
+  --text "${message}" \
+  --region ${REGION}
